@@ -7,7 +7,7 @@
             <h1>@lang('site.categories')</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
+                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li><a href="{{ route('dashboard.categories.index') }}"> @lang('site.categories')</a></li>
                 <li class="active">@lang('site.add')</li>
             </ol>
@@ -28,13 +28,18 @@
 
                         {{ csrf_field() }}
                         {{ method_field('post') }}
-
+                         <div class="form-group">
+                            <label>@lang('site.slug')</label>
+                            <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
+                        </div>
                         @foreach (config('translatable.locales') as $locale)
-                            <div class="form-group">
-                                <label>@lang('site.' . $locale . '.name')</label>
-                                <input type="text" name="{{ $locale }}[name]" class="form-control" value="{{ old($locale . '.name') }}">
-                            </div>
-                        @endforeach
+                        <div class="form-group">
+                            <label>@lang('site.' . $locale . '.name')</label>
+                            <input type="text" name="{{ $locale }}[name]" class="form-control" value="{{ old($locale . '.name') }}">
+                        </div>
+                    @endforeach
+
+
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</button>

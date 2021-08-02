@@ -7,7 +7,7 @@
             <h1>@lang('site.clients')</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
+                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li><a href="{{ route('dashboard.clients.index') }}"> @lang('site.clients')</a></li>
                 <li class="active">@lang('site.add')</li>
             </ol>
@@ -28,7 +28,7 @@
 
                         {{ csrf_field() }}
                         {{ method_field('post') }}
-                        
+
                         <div class="form-group">
                             <label>@lang('site.name')</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
@@ -45,7 +45,7 @@
                             <label>@lang('site.address')</label>
                             <textarea name="address" class="form-control">{{ old('address') }}</textarea>
                         </div>
-                        
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</button>
                         </div>
@@ -61,3 +61,11 @@
     </div><!-- end of content wrapper -->
 
 @endsection
+
+
+@push('scripts')
+
+
+
+@endpush
+

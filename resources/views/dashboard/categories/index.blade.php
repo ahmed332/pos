@@ -9,7 +9,7 @@
             <h1>@lang('site.categories')</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
+                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li class="active">@lang('site.categories')</li>
             </ol>
         </section>
@@ -46,26 +46,29 @@
 
                 <div class="box-body">
 
-                    @if ($categories->count() > 0)
+                    @if ($categories->total() > 0)
 
                         <table class="table table-hover">
 
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>@lang('site.slug')</th>
                                 <th>@lang('site.name')</th>
-                                <th>@lang('site.products_count')</th>
-                                <th>@lang('site.related_products')</th>
+                                <th>@lang('site.product_related')</th>
+                                <th>@lang('site.product_related')</th>
                                 <th>@lang('site.action')</th>
+
                             </tr>
                             </thead>
-                            
+
                             <tbody>
                             @foreach ($categories as $index=>$category)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
+                                    <td>{{ $category->slug }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <td>{{ $category->products->count() }}</td>
+                                    <td>{{ $category->products()->count() }}</td>
                                     <td><a href="{{ route('dashboard.products.index', ['category_id' => $category->id]) }}" class="btn btn-info btn-sm">@lang('site.related_products')</a></td>
                                     <td>
                                         @if (auth()->user()->hasPermission('update_categories'))
@@ -84,18 +87,18 @@
                                         @endif
                                     </td>
                                 </tr>
-                            
+
                             @endforeach
                             </tbody>
 
                         </table><!-- end of table -->
-                        
+
                         {{ $categories->appends(request()->query())->links() }}
-                        
+
                     @else
-                        
+
                         <h2>@lang('site.no_data_found')</h2>
-                        
+
                     @endif
 
                 </div><!-- end of box body -->

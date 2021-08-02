@@ -80,6 +80,7 @@
     {{--html in  ie--}}
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="{{ asset('dashboard_files/js/custom/order.js') }}"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -127,7 +128,6 @@
 
 {{--custom js--}}
 <script src="{{ asset('dashboard_files/js/custom/image_preview.js') }}"></script>
-<script src="{{ asset('dashboard_files/js/custom/order.js') }}"></script>
 
 <script>
     $(document).ready(function () {
@@ -185,7 +185,11 @@
 
     });//end of ready
 
-</script> --}}
-@stack('scripts')
+</script>
+
+
+@stack('custom')
+
+
 </body>
 </html>

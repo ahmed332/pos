@@ -68,6 +68,8 @@ return [
     'sale_price' => 'سعر البيع',
     'stock' => 'المخزن',
     'profit_percent' => 'المكسب',
+    'name' => '  الاسم بالغه العربيه',
+
 
     'ar' => [
         'name' => 'الاسم بالغه العربيه',
@@ -78,5 +80,13 @@ return [
         'name' => 'الاسم بالغه الانجليزيه',
         'description' => 'الوصف بالغه الانجليزيه',
     ],
+    'ar-name-required' =>'الاسم باللغه العربيه مطلوب',
+    'ar-description-required' =>'الوصف باللغه العربيه مطلوب',
+    'En.name.required'=>'الاسم باللغه الانجليزيه مطلوب',
+
+    'En-description-required' =>'الوصف باللغه الامجليزيه مطلوب',
+    'purchase_price_required'=>'سعر الشراء مطلوب',
+    'product_related'=>'عدد المنتجات'
+
 
 ];

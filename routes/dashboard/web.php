@@ -23,6 +23,11 @@
                     Route::get('/', 'DashboardController@index')->name('index');
 
                 Route::resource('users', 'UserController')->except(['show']);
+                Route::resource('categories', 'categoryController')->except(['show']);
+                Route::resource('products', 'productController')->except(['show']);
+                Route::resource('clients', 'ClientController')->except(['show']);
+                Route::resource('clients.orders', 'client\orderController')->except(['show']);
+
 
             });
         });

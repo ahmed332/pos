@@ -9,7 +9,7 @@
             <h1>@lang('site.add_order')</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
+                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li><a href="{{ route('dashboard.clients.index') }}">@lang('site.clients')</a></li>
                 <li class="active">@lang('site.add_order')</li>
             </ol>
@@ -32,18 +32,18 @@
                         <div class="box-body">
 
                             @foreach ($categories as $category)
-                                
+
                                 <div class="panel-group">
 
                                     <div class="panel panel-info">
 
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a data-toggle="collapse" href="#{{ str_replace(' ', '-', $category->name) }}">{{ $category->name }}</a>
+                                                <a data-toggle="collapse" href="#{{$category->name}}">{{ $category->name }}</a>
                                             </h4>
                                         </div>
 
-                                        <div id="{{ str_replace(' ', '-', $category->name) }}" class="panel-collapse collapse">
+                                        <div id="{{ $category->name }}" class="panel-collapse collapse">
 
                                             <div class="panel-body">
 
@@ -109,7 +109,7 @@
 
                         <div class="box-body">
 
-                            <form action="{{ route('dashboard.clients.orders.store', $client->id) }}" method="post">
+                             <form action="" method="post">
 
                                 {{ csrf_field() }}
                                 {{ method_field('post') }}
@@ -142,59 +142,7 @@
 
                     </div><!-- end of box -->
 
-                    @if ($client->orders->count() > 0)
 
-                        <div class="box box-primary">
-
-                            <div class="box-header">
-
-                                <h3 class="box-title" style="margin-bottom: 10px">@lang('site.previous_orders')
-                                    <small>{{ $orders->total() }}</small>
-                                </h3>
-
-                            </div><!-- end of box header -->
-
-                            <div class="box-body">
-
-                                @foreach ($orders as $order)
-
-                                    <div class="panel-group">
-
-                                        <div class="panel panel-success">
-
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#{{ $order->created_at->format('d-m-Y-s') }}">{{ $order->created_at->toFormattedDateString() }}</a>
-                                                </h4>
-                                            </div>
-
-                                            <div id="{{ $order->created_at->format('d-m-Y-s') }}" class="panel-collapse collapse">
-
-                                                <div class="panel-body">
-
-                                                    <ul class="list-group">
-                                                        @foreach ($order->products as $product)
-                                                            <li class="list-group-item">{{ $product->name }}</li>
-                                                        @endforeach
-                                                    </ul>
-
-                                                </div><!-- end of panel body -->
-
-                                            </div><!-- end of panel collapse -->
-
-                                        </div><!-- end of panel primary -->
-
-                                    </div><!-- end of panel group -->
-
-                                @endforeach
-
-                                {{ $orders->links() }}
-
-                            </div><!-- end of box body -->
-
-                        </div><!-- end of box -->
-
-                    @endif
 
                 </div><!-- end of col -->
 
@@ -205,3 +153,32 @@
     </div><!-- end of content wrapper -->
 
 @endsection
+
+@push('custom')
+<script>
+
+    $(document).ready(function(){
+
+        $('.add-product-btn').on('click',function(e){
+            e.preventDefault();
+            var name = $(this).data('name');
+        var id = $(this).data('id');
+        var price = $.number($(this).data('price'), 2);
+
+        $(this).removeClass('btn-success').addClass('btn-default disabled');
+
+        var html =
+            `<tr>
+                <td>${name}</td>
+                <td><input type="number" name="products[${id}][quantity]" data-price="${price}" class="form-control input-sm product-quantity" min="1" value="1"></td>
+                <td class="product-price">${price}</td>
+                <td><button class="btn btn-danger btn-sm remove-product-btn" data-id="${id}"><span class="fa fa-trash"></span></button></td>
+            </tr>`;
+
+        $('.order-list').append(html);
+        });
+    });
+
+</script>
+
+@endpush

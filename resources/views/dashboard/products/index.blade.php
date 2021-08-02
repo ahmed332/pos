@@ -9,7 +9,7 @@
             <h1>@lang('site.products')</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
+                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li class="active">@lang('site.products')</li>
             </ol>
         </section>
@@ -20,7 +20,7 @@
 
                 <div class="box-header with-border">
 
-                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.products') <small>{{ $products->total() }}</small></h3>
+                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.products') <small>{{ $products->count() }}</small></h3>
 
                     <form action="{{ route('dashboard.products.index') }}" method="get">
 
@@ -32,13 +32,18 @@
 
                             <div class="col-md-4">
                                 <select name="category_id" class="form-control">
-                                    <option value="">@lang('site.all_categories')</option>
+                                    <option value=""></option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ request()->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" {{ request()->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+
+
+
                                     @endforeach
+
+
                                 </select>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
                                 @if (auth()->user()->hasPermission('create_products'))
@@ -68,27 +73,31 @@
                                 <th>@lang('site.image')</th>
                                 <th>@lang('site.purchase_price')</th>
                                 <th>@lang('site.sale_price')</th>
-                                <th>@lang('site.profit_percent') %</th>
+                                <th>@lang('site.profit_percent')</th>
                                 <th>@lang('site.stock')</th>
                                 <th>@lang('site.action')</th>
                             </tr>
                             </thead>
-                            
+
                             <tbody>
                             @foreach ($products as $index=>$product)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $product->name }}</td>
                                     <td>{!! $product->description !!}</td>
+
+                                    <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>
-                                    <td><img src="{{ $product->image_path }}" style="width: 100px"  class="img-thumbnail" alt=""></td>
-                                    <td>{{ $product->purchase_price }}</td>
-                                    <td>{{ $product->sale_price }}</td>
+                                    <td><img src="{{asset('uploads/product_images/' . $product->image)}}" style="width: 100px"  class="img-thumbnail" alt=""></td>
+                                    <td>{{$product->purchase_price}}</td>
+                                    <td>{{$product->sale_price}}</td>
                                     <td>{{ $product->profit_percent }} %</td>
+
+                                    <td>{{$product->stock}}</td>
+
                                     <td>{{ $product->stock }}</td>
                                     <td>
                                         @if (auth()->user()->hasPermission('update_products'))
-                                            <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>
+                                            <a href="{{route('dashboard.products.edit',$product->id)}}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>
                                         @else
                                             <a href="#" class="btn btn-info btn-sm disabled"><i class="fa fa-edit"></i> @lang('site.edit')</a>
                                         @endif
@@ -103,18 +112,18 @@
                                         @endif
                                     </td>
                                 </tr>
-                            
+
                             @endforeach
                             </tbody>
 
                         </table><!-- end of table -->
-                        
+
                         {{ $products->appends(request()->query())->links() }}
-                        
+
                     @else
-                        
+
                         <h2>@lang('site.no_data_found')</h2>
-                        
+
                     @endif
 
                 </div><!-- end of box body -->

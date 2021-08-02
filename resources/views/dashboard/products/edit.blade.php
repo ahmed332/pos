@@ -7,7 +7,7 @@
             <h1>@lang('site.products')</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
+                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li><a href="{{ route('dashboard.products.index') }}"> @lang('site.products')</a></li>
                 <li class="active">@lang('site.edit')</li>
             </ol>
@@ -33,8 +33,10 @@
                             <label>@lang('site.categories')</label>
                             <select name="category_id" class="form-control">
                                 <option value="">@lang('site.all_categories')</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                @foreach ($categories as $catagory)
+                                <option value="{{$catagory->id}}" {{$product->category_id == $catagory->id?'selected':""}}>{{$catagory->name}}</option>
+
+
                                 @endforeach
                             </select>
                         </div>
@@ -58,7 +60,7 @@
                         </div>
 
                         <div class="form-group">
-                            <img src="{{ $product->image_path }}" style="width: 100px" class="img-thumbnail image-preview" alt="">
+                            <img src="{{ asset('uploads/product_images/'.$product->image)}}" style="width: 100px" class="img-thumbnail image-preview" alt="">
                         </div>
 
                         <div class="form-group">
@@ -69,7 +71,9 @@
                         <div class="form-group">
                             <label>@lang('site.sale_price')</label>
                             <input type="number" name="sale_price" step="0.01" class="form-control" value="{{ $product->sale_price }}">
+                         
                         </div>
+
 
                         <div class="form-group">
                             <label>@lang('site.stock')</label>

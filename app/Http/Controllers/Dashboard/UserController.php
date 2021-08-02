@@ -33,7 +33,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        $users = User::whereRoleIs('admin')->where(function ($q) use ($request) {
+
+        $users = User::where(function ($q) use ($request) {
 
             return $q->when($request->search, function ($query) use ($request) {
 
@@ -184,7 +185,7 @@ class UserController extends Controller
         }//end of if
 
         $user->delete();
-        session()->flash('success',__('site.deleted.successfully'));
+        session()->flash('success',__('site.delete_succussfuly'));
         return redirect()->route('dashboard.users.index');
     }
 }
